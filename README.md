@@ -64,12 +64,12 @@ To run this project locally, follow the steps below:
 
    **Backend (API Server)**:
    ```bash
-   npm run dev
+   npm run index.js
    ```
 
    **Frontend (React Server)**:
    ```bash
-   npm start
+   npm run dev
    ```
 
 6. Open your browser and navigate to `http://localhost:3000` to view the application.
