@@ -101,7 +101,6 @@ To run this project locally, follow the steps below:
 
 ## 🎯 Next Steps
 
-- Implement user authentication (login/signup).
 - Add more e-commerce features such as product categories, cart, and checkout.
 - Optimize and deploy the application on cloud services like Heroku or Vercel.
 
