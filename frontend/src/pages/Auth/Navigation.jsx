@@ -61,15 +61,6 @@ const Navigation = () => {
         }`}
       >
         <div className="flex flex-col space-y-8 text-2xl text-center overflow-y-auto max-h-full">
-          {/* Logo */}
-          <div className="flex justify-center mb-4">
-            <img
-              src={"https://i.ibb.co/MhTpQsp/Logo.png"}
-              alt="ClickAndBuy Logo"
-              className="h-12 max-w-full"
-            />
-          </div>
-
           {/* Links */}
           <Link
             to="/home"
@@ -213,9 +204,11 @@ const Navigation = () => {
           {/* Logo */}
           <div className="flex justify-center mb-4">
             <img
-              src={"https://i.ibb.co/MhTpQsp/Logo.png"}
+              src={showSidebar ? "https://i.ibb.co/MhTpQsp/Logo.png" : "https://i.ibb.co/RTm0QhP/Screenshot-2024-12-20-150500.png"}
               alt="ClickAndBuy Logo"
-              className="h-26 max-w-full filter invert"
+              className={`${
+                showSidebar ? "h-30" : "h-30" // Set a larger height when showSidebar is false
+              } max-w-full filter invert transition-all duration-300`} // Adjust h-40 to a size you prefer
             />
           </div>
 
@@ -331,29 +324,33 @@ const Navigation = () => {
             </div>
           ) : (
             <div className="space-y-4">
-            <Link
-              to="/login"
-              className="flex items-center py-2 px-4 hover:bg-blue-500"
-            >
-              <AiOutlineLogin size={26} />
-              <span
-                className={`ml-4 ${showSidebar ? "block" : "hidden"}`}
+              <Link
+                to="/login"
+                className="flex items-center py-2 px-4 hover:bg-blue-500"
               >
-                LOGIN
-              </span>
-            </Link>
-            <Link
-              to="/register"
-              className="flex items-center py-2 px-4 hover:bg-blue-500"
-            >
-              <AiOutlineUserAdd size={26} />
-              <span
-                className={`ml-4 ${showSidebar ? "block" : "hidden"}`}
-              >
-                REGISTER
-              </span>
-            </Link>
-          </div>
+              <ul>
+                <li className="flex items-center py-2">
+                  <AiOutlineLogin size={26} />
+                  <span className={`ml-4 ${showSidebar ? "block" : "hidden"}`}>LOGIN</span>
+                </li>
+              </ul>
+              </Link>
+                <Link
+                  to="/register"
+                  className="flex items-center py-2 px-4 hover:bg-blue-500"
+                >
+                  <ul>
+                    <li className="flex items-center py-2">
+                      <AiOutlineUserAdd size={26} />
+                      <span
+                        className={`ml-4 ${showSidebar ? "block" : "hidden"}`}
+                      >
+                        REGISTER
+                      </span>              
+                    </li>
+                  </ul>
+                </Link>
+            </div>
 
 
           )}

@@ -23,4 +23,10 @@
 }
 
 /* Hello */
+@media (max-width: 1000px) {
+    .home-page-margin-left{
+        margin-left: 0;
+    }
+    
+}
   
