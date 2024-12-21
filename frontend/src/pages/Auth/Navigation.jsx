@@ -204,7 +204,7 @@ const Navigation = () => {
           {/* Logo */}
           <div className="flex justify-center mb-4">
             <img
-              src={showSidebar ? "https://i.ibb.co/MhTpQsp/Logo.png" : "https://i.ibb.co/RTm0QhP/Screenshot-2024-12-20-150500.png"}
+              src={showSidebar ? "https://i.ibb.co/FK8zKfg/Logo.png" : "https://i.ibb.co/RTm0QhP/Screenshot-2024-12-20-150500.png"}
               alt="ClickAndBuy Logo"
               className={`${
                 showSidebar ? "h-30" : "h-30" // Set a larger height when showSidebar is false
