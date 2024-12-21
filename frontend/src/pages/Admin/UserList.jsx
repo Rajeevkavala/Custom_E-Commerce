@@ -2,46 +2,36 @@ import { useEffect, useState } from "react";
 import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
+import {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+  useUpdateUserMutation,
+} from "../../redux/api/userApiSlice";
 import { toast } from "react-hot-toast";
-import axios from "axios"; // Import axios
+
 
 const UserList = () => {
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data: users, refetch, isLoading, error } = useGetUsersQuery();
+
+  const [deleteUser] = useDeleteUserMutation();
 
   const [editableUserId, setEditableUserId] = useState(null);
   const [editableUserName, setEditableUserName] = useState("");
   const [editableUserEmail, setEditableUserEmail] = useState("");
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get("/api/users", {
-          withCredentials: true, // To include cookies in the request
-        });
-        setUsers(response.data);
-        setIsLoading(false);
-      } catch (err) {
-        setError(err.response?.data?.message || err.message);
-        setIsLoading(false);
-      }
-    };
+  const [updateUser] = useUpdateUserMutation();
 
-    fetchUsers();
-  }, []); // Only run once when the component mounts
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const deleteHandler = async (id) => {
     if (window.confirm("Are you sure")) {
       try {
-        await axios.delete(`/api/users/${id}`, {
-          withCredentials: true, // Ensure cookies are sent with the request
-        });
-        setUsers(users.filter(user => user._id !== id)); // Remove user from the list
-        toast.success("User deleted successfully!");
+        await deleteUser(id);
+        refetch();
       } catch (err) {
-        toast.error(err.response?.data?.message || err.message);
+        toast.error(err?.data?.message || err.error);
       }
     }
   };
@@ -54,35 +44,32 @@ const UserList = () => {
 
   const updateHandler = async (id) => {
     try {
-      const updatedUser = {
+      await updateUser({
         userId: id,
         username: editableUserName,
         email: editableUserEmail,
-      };
-      await axios.put(`/api/users/${id}`, updatedUser, {
-        withCredentials: true, // Ensure cookies are sent with the request
       });
       setEditableUserId(null);
-      setUsers(
-        users.map((user) =>
-          user._id === id ? { ...user, ...updatedUser } : user
-        )
-      );
-      toast.success("User updated successfully!");
+      refetch();
     } catch (err) {
-      toast.error(err.response?.data?.message || err.message);
+      toast.error(err?.data?.message || err.error);
     }
   };
 
   return (
     <div className="p-4 text-white min-h-screen">
-      <h1 className="text-2xl font-semibold mb-4 sm:text-center">Users</h1>
+      <h1 className="text-2xl font-semibold mb-4  sm:text-center">
+        Users
+      </h1>
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <div className="flex flex-col md:flex-row md:justify-center">
+          {/* <AdminMenu /> */}
           <table className="w-full md:w-3/4 mx-auto table-auto">
             <thead>
               <tr className="bg-gray-800">
