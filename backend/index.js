@@ -33,4 +33,10 @@ app.use(cookieParser());
 // Define routes
 app.use("/api/users", userRoutes);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: err.message });
+});
+
+
 app.listen(port, () => console.log(`Server running on port: ${port}`));
